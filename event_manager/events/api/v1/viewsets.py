@@ -21,6 +21,8 @@ class EventViewSet(viewsets.ModelViewSet):
 
     queryset = Event.objects.all()
     serializer_class = EventSerializer
+    filterset_fields = ("title", "categories__name", "location")
+    search_fields = ("title", "description", "location")
 
 
 class SpeakerViewSet(viewsets.ModelViewSet):

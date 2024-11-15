@@ -3,7 +3,6 @@ from event_manager.events.models import (
     Event,
     Attendee,
     Speaker,
-    EventCategory,
     Reservation,
 )
 
@@ -14,7 +13,7 @@ def make_cancel(modeladmin, request, queryset):
 
 
 class CategoryInline(admin.TabularInline):
-    model = EventCategory
+    model = Event.categories.through
 
 
 class SpeakerInline(admin.TabularInline):
@@ -23,12 +22,10 @@ class SpeakerInline(admin.TabularInline):
 
 class EventAdmin(admin.ModelAdmin):
     model = Event
-    list_filter = ["title", "categories__category", "location", "status"]
+    list_filter = ["title", "categories__name", "location", "status"]
     list_display = ["title", "date", "status", "location", "capacity"]
     search_fields = ["title", "description", "location"]
-    readonly_fields = [
-        "speakers",
-    ]
+    readonly_fields = ["speakers", "categories"]
     inlines = [CategoryInline, SpeakerInline]
 
     actions = [make_cancel]

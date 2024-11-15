@@ -2,6 +2,20 @@ from rest_framework.serializers import ValidationError
 from django.db import models
 
 
+class Category(models.Model):
+    """
+    A model representing an event category.
+    """
+
+    name = models.CharField(max_length=255, unique=True)
+
+    def __str__(self):
+        return f"{self.name}"
+
+    class Meta:
+        ordering = ["name"]
+
+
 class Speaker(models.Model):
     """
     A model representing a speaker.
@@ -41,6 +55,7 @@ class Event(models.Model):
         max_length=30, choices=EventStatus.choices, default=EventStatus.IN_PROGRESS
     )
     speakers = models.ManyToManyField(Speaker, related_name="speakers")
+    categories = models.ManyToManyField(Category, related_name="categories")
 
     def get_attendees(self):
         """
@@ -96,41 +111,3 @@ class Reservation(models.Model):
         if self.event.capacity <= Reservation.objects.filter(event=self.event).count():
             raise ValidationError("Reservation is already full")
         super().save(*args, **kwargs)
-
-
-class Category(models.Model):
-    """
-    A model representing an event category.
-    """
-
-    name = models.CharField(max_length=255, unique=True)
-
-    def __str__(self):
-        return f"{self.name}"
-
-    class Meta:
-        ordering = ["name"]
-
-
-class EventCategory(models.Model):
-    """
-    A model representing an event category.
-    """
-
-    event = models.ForeignKey(
-        Event, on_delete=models.CASCADE, related_name="categories"
-    )
-    category = models.ForeignKey(
-        Category, on_delete=models.CASCADE, related_name="events"
-    )
-
-    def __str__(self):
-        return f"{self.event.title} - {self.category.name}"
-
-    @property
-    def name(self):
-        return self.category.name
-
-    class Meta:
-        ordering = ["event"]
-        unique_together = ("event", "category")

@@ -6,7 +6,6 @@ from event_manager.events.models import (
     Category,
     Attendee,
     Reservation,
-    EventCategory,
 )
 
 
@@ -41,7 +40,7 @@ class EventSerializer(serializers.ModelSerializer):
         instance.categories.all().delete()
         for category_name in categories:
             category, created = Category.objects.get_or_create(name=category_name)
-            EventCategory.objects.get_or_create(category=category, event=instance)
+            instance.categories.add(category)
         instance.save()
 
 
