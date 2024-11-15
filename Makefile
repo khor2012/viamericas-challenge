@@ -1,6 +1,8 @@
-install:
+pre:
 	pip install -r requirements/pip-tools.txt
-	uv pip install -r requirements/base.txt
+
+install: pre sync
+
 
 compile:
 	uv pip compile requirements/pip-tools.in -o requirements/pip-tools.txt
