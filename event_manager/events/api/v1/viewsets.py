@@ -32,6 +32,7 @@ class SpeakerViewSet(viewsets.ModelViewSet):
 
     queryset = Speaker.objects.all()
     serializer_class = SpeakerSerializer
+    search_fields = ("name", "phone", "email")
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
@@ -41,6 +42,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
 
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+    search_fields = ("name",)
 
 
 class AttendeeViewSet(viewsets.ModelViewSet):
@@ -50,6 +52,7 @@ class AttendeeViewSet(viewsets.ModelViewSet):
 
     queryset = Attendee.objects.all()
     serializer_class = AttendeeSerializer
+    search_fields = ("name", "phone", "email")
 
 
 class ReservationViewSet(viewsets.ModelViewSet):

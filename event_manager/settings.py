@@ -35,15 +35,19 @@ DJANGO_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "rest_framework",
-    "django_filters",
 ]
 
 LOCAL_APPS = [
     "event_manager.events",
 ]
 
-INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS
+THIRD_PARTY_APPS = [
+    "rest_framework",
+    "django_filters",
+    "drf_spectacular",
+]
+
+INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + THIRD_PARTY_APPS
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -136,4 +140,16 @@ REST_FRAMEWORK = {
         "django_filters.rest_framework.DjangoFilterBackend",
         "rest_framework.filters.SearchFilter",
     ],
+"DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+}
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Event Manager API",
+    "DESCRIPTION": "Documentation of API endpoints of Event Manager",
+    "VERSION": "1.0.0",
+    "SERVE_PERMISSIONS": ["rest_framework.permissions.IsAdminUser"],
+    "SERVERS": [
+        {"url": "http://127.0.0.1:8000", "description": "Local Development server"},
+    ],
+
 }
