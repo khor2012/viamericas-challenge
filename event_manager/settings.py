@@ -43,6 +43,7 @@ LOCAL_APPS = [
 
 THIRD_PARTY_APPS = [
     "rest_framework",
+    "rest_framework.authtoken",
     "django_filters",
     "drf_spectacular",
 ]
@@ -140,7 +141,7 @@ REST_FRAMEWORK = {
         "django_filters.rest_framework.DjangoFilterBackend",
         "rest_framework.filters.SearchFilter",
     ],
-"DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
 SPECTACULAR_SETTINGS = {
@@ -151,5 +152,4 @@ SPECTACULAR_SETTINGS = {
     "SERVERS": [
         {"url": "http://127.0.0.1:8000", "description": "Local Development server"},
     ],
-
 }

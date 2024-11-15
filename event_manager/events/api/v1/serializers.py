@@ -9,6 +9,15 @@ from event_manager.events.models import (
 )
 
 
+class CustomSlugRelatedField(serializers.SlugRelatedField):
+    def to_internal_value(self, data):
+        try:
+            obj, created = self.get_queryset().get_or_create(**{self.slug_field: data})
+            return obj
+        except (TypeError, ValueError):
+            self.fail("invalid")
+
+
 class SpeakerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Speaker
@@ -16,10 +25,10 @@ class SpeakerSerializer(serializers.ModelSerializer):
 
 
 class EventSerializer(serializers.ModelSerializer):
-    categories = serializers.SlugRelatedField(
+    speakers = SpeakerSerializer(many=True, read_only=True)
+    categories = CustomSlugRelatedField(
         many=True, slug_field="name", queryset=Category.objects.all()
     )
-    speakers = SpeakerSerializer(many=True, read_only=True)
 
     class Meta:
         model = Event
@@ -35,13 +44,13 @@ class EventSerializer(serializers.ModelSerializer):
         )
 
     def save(self, **kwargs):
-        categories = self.validated_data.pop("categories")
+        categories = self.validated_data.pop("categories", [])
         instance = super().save(**kwargs)
-        instance.categories.all().delete()
-        for category_name in categories:
-            category, created = Category.objects.get_or_create(name=category_name)
-            instance.categories.add(category)
-        instance.save()
+        if categories:
+            instance.categories.all().delete()
+            for category in categories:
+                instance.categories.add(category)
+            instance.save()
 
 
 class CategorySerializer(serializers.ModelSerializer):
