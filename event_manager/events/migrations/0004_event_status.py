@@ -4,15 +4,18 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('events', '0003_alter_attendee_email_alter_eventspeaker_event_and_more'),
+        ("events", "0003_alter_attendee_email_alter_eventspeaker_event_and_more"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='event',
-            name='status',
-            field=models.CharField(choices=[('p', 'in_progress'), ('c', 'canceled')], default='p', max_length=1),
+            model_name="event",
+            name="status",
+            field=models.CharField(
+                choices=[("p", "in_progress"), ("c", "canceled")],
+                default="p",
+                max_length=1,
+            ),
         ),
     ]

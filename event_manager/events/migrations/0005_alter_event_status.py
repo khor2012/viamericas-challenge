@@ -4,15 +4,18 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('events', '0004_event_status'),
+        ("events", "0004_event_status"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='event',
-            name='status',
-            field=models.CharField(choices=[('in_progress', 'In Progress'), ('canceled', 'Canceled')], default='in_progress', max_length=30),
+            model_name="event",
+            name="status",
+            field=models.CharField(
+                choices=[("in_progress", "In Progress"), ("canceled", "Canceled")],
+                default="in_progress",
+                max_length=30,
+            ),
         ),
     ]

@@ -5,30 +5,37 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('events', '0002_alter_category_name_alter_eventcategory_category_and_more'),
+        ("events", "0002_alter_category_name_alter_eventcategory_category_and_more"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='attendee',
-            name='email',
+            model_name="attendee",
+            name="email",
             field=models.EmailField(max_length=254, unique=True),
         ),
         migrations.AlterField(
-            model_name='eventspeaker',
-            name='event',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='speakers', to='events.event'),
+            model_name="eventspeaker",
+            name="event",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="speakers",
+                to="events.event",
+            ),
         ),
         migrations.AlterField(
-            model_name='eventspeaker',
-            name='speaker',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='events', to='events.speaker'),
+            model_name="eventspeaker",
+            name="speaker",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE,
+                related_name="events",
+                to="events.speaker",
+            ),
         ),
         migrations.AlterField(
-            model_name='speaker',
-            name='email',
+            model_name="speaker",
+            name="email",
             field=models.EmailField(max_length=254, unique=True),
         ),
     ]
