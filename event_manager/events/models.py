@@ -1,15 +1,42 @@
 from rest_framework.serializers import ValidationError
 from django.db import models
 
+
+class Speaker(models.Model):
+    """
+    A model representing a speaker.
+    """
+    name = models.CharField(max_length=255)
+    phone = models.CharField(max_length=255)
+    email = models.EmailField(unique=True)
+
+    def __str__(self):
+        return f'{self.name} - {self.email}'
+
+    class Meta:
+        ordering = ['name']
+        unique_together = ('name', 'email')
+
+
 class Event(models.Model):
     """
     A model representing an event.
     """
+
+    class EventStatus(models.TextChoices):
+        """
+        Available statuses for an event
+        """
+        IN_PROGRESS = 'in_progress'
+        CANCELED = 'canceled'
+
     title = models.CharField(max_length=255)
     date = models.DateField()
     location = models.CharField(max_length=255)
     description = models.TextField()
     capacity = models.IntegerField()
+    status = models.CharField(max_length=30, choices=EventStatus.choices, default=EventStatus.IN_PROGRESS)
+    speakers = models.ManyToManyField(Speaker, related_name='speakers')
 
     def get_attendees(self):
         """
@@ -24,29 +51,13 @@ class Event(models.Model):
         ordering = ['date']
 
 
-class Speaker(models.Model):
-    """
-    A model representing a speaker.
-    """
-    name = models.CharField(max_length=255)
-    phone = models.CharField(max_length=255)
-    email = models.EmailField()
-
-    def __str__(self):
-        return f'{self.name} - {self.email}'
-
-    class Meta:
-        ordering = ['name']
-        unique_together = ('name', 'email')
-
-
 class Attendee(models.Model):
     """
     A model representing an attendee.
     """
     name = models.CharField(max_length=255)
     phone = models.CharField(max_length=255)
-    email = models.EmailField()
+    email = models.EmailField(unique=True)
 
     def __str__(self):
         return f'{self.name} - {self.email}'
@@ -54,21 +65,6 @@ class Attendee(models.Model):
     class Meta:
         ordering = ['name']
         unique_together = ('name', 'email')
-
-
-class EventSpeaker(models.Model):
-    """
-    A model representing an event speaker.
-    """
-    event = models.ForeignKey(Event, on_delete=models.CASCADE)
-    speaker = models.ForeignKey(Speaker, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return f'{self.event.title} - {self.speaker.name}'
-
-    class Meta:
-        ordering = ['event']
-        unique_together = ('event', 'speaker')
 
 
 class Reservation(models.Model):
@@ -90,6 +86,7 @@ class Reservation(models.Model):
         if self.event.capacity <= Reservation.objects.filter(event=self.event).count():
             raise ValidationError('Reservation is already full')
         super().save(*args, **kwargs)
+
 
 class Category(models.Model):
     """
