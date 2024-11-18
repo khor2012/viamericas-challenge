@@ -151,15 +151,10 @@
 													]
 												},
 												"url": {
-													"raw": "http://127.0.0.1:8000/api/auth/token",
-													"protocol": "http",
+													"raw": "{{baseUrl}}/api/auth/token",
 													"host": [
-														"127",
-														"0",
-														"0",
-														"1"
+														"{{baseUrl}}"
 													],
-													"port": "8000",
 													"path": [
 														"api",
 														"auth",
@@ -263,15 +258,10 @@
 															}
 														],
 														"url": {
-															"raw": "http://127.0.0.1:8000/api/v1/attendees/:id/",
-															"protocol": "http",
+															"raw": "{{baseUrl}}/api/v1/attendees/:id/",
 															"host": [
-																"127",
-																"0",
-																"0",
-																"1"
+																"{{baseUrl}}"
 															],
-															"port": "8000",
 															"path": [
 																"api",
 																"v1",
@@ -397,15 +387,10 @@
 															}
 														},
 														"url": {
-															"raw": "http://127.0.0.1:8000/api/v1/attendees/:id/",
-															"protocol": "http",
+															"raw": "{{baseUrl}}/api/v1/attendees/:id/",
 															"host": [
-																"127",
-																"0",
-																"0",
-																"1"
+																"{{baseUrl}}"
 															],
-															"port": "8000",
 															"path": [
 																"api",
 																"v1",
@@ -531,15 +516,10 @@
 															}
 														},
 														"url": {
-															"raw": "http://127.0.0.1:8000/api/v1/attendees/:id/",
-															"protocol": "http",
+															"raw": "{{baseUrl}}/api/v1/attendees/:id/",
 															"host": [
-																"127",
-																"0",
-																"0",
-																"1"
+																"{{baseUrl}}"
 															],
-															"port": "8000",
 															"path": [
 																"api",
 																"v1",
@@ -628,15 +608,10 @@
 															}
 														],
 														"url": {
-															"raw": "http://127.0.0.1:8000/api/v1/attendees/:id/",
-															"protocol": "http",
+															"raw": "{{baseUrl}}/api/v1/attendees/:id/",
 															"host": [
-																"127",
-																"0",
-																"0",
-																"1"
+																"{{baseUrl}}"
 															],
-															"port": "8000",
 															"path": [
 																"api",
 																"v1",
@@ -720,15 +695,10 @@
 													}
 												],
 												"url": {
-													"raw": "http://127.0.0.1:8000/api/v1/attendees/?page=<integer>&search=<string>",
-													"protocol": "http",
+													"raw": "{{baseUrl}}/api/v1/attendees/?page=<integer>&search=<string>",
 													"host": [
-														"127",
-														"0",
-														"0",
-														"1"
+														"{{baseUrl}}"
 													],
-													"port": "8000",
 													"path": [
 														"api",
 														"v1",
@@ -852,15 +822,10 @@
 													}
 												},
 												"url": {
-													"raw": "http://127.0.0.1:8000/api/v1/attendees/",
-													"protocol": "http",
+													"raw": "{{baseUrl}}/api/v1/attendees/",
 													"host": [
-														"127",
-														"0",
-														"0",
-														"1"
+														"{{baseUrl}}"
 													],
-													"port": "8000",
 													"path": [
 														"api",
 														"v1",
@@ -3669,11 +3634,6 @@
 		{
 			"key": "baseUrl",
 			"value": "http://127.0.0.1:8000"
-		},
-		{
-			"key": "token",
-			"value": "wrong_token",
-			"type": "string"
 		}
 	]
 }
